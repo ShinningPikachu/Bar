@@ -1,14 +1,36 @@
 package Domain;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 public class Ticket {
-    ArrayList<Product> allProduct;
-    Float totalPrice;
+    HashMap<String, Product> allProduct;
+    Double totalPrice;
+    Integer ID;
+    Date data;
+    Time time;
 
-    void Ticket(){
-        this.allProduct = new ArrayList<>();
-        this.totalPrice = 0.f;
+    Ticket(Integer ID){
+        this.allProduct = new HashMap<>();
+        this.totalPrice = 0.0;
+        this.ID = ID;
     }
+
+    Integer GetID(){
+        return this.ID;
+    }
+
+    void AddProduct(String name, Double price, ArrayList<String> ingre, ProductDictionary dic){
+        if(allProduct.containsKey(name)){
+            allProduct.get(name).modCant(1);
+        }else{
+            //Add a product in ticket, but is necessary to define a continues function to do that.
+        }
+
+    }
+
+
 
 }

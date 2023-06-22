@@ -5,23 +5,30 @@ import java.util.ArrayList;
 public class Product {
     ArrayList<String> ingredient;
     String name;
-    Float price;
+    Double price;
+    Integer cant;
 
-    void Product(String name, Float price){
-        ingredient = new ArrayList<>();
+    Product(String name, Double price, ArrayList<String> ingredient){
+        this.ingredient = new ArrayList<String>(ingredient);
         this.name = name;
         this.price = price;
+        this.cant = 1;
     }
-    void modiPrice(Float newPrice){
+    void modiPrice(Double newPrice){
         this.price = newPrice;
     }
+    void modCant(Integer t){
+        this.cant = this.cant + t;
+    }
 
-    Float getPrice(){
+    Double getPrice(){
         return this.price;
     }
 
     String getName(){
         return this.name;
     }
+
+    ArrayList<String> getIngredient(){ return this.ingredient;}
 
 }
