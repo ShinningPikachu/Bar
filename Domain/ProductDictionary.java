@@ -15,7 +15,7 @@ public class ProductDictionary {
 
     HashMap<String, Product> actualResult;
 
-    ProductDictionary(ArrayList<String> type, ArrayList<String> ingred){
+    public ProductDictionary(ArrayList<String> type, ArrayList<String> ingred){
         this.Ingredient = new HashMap<>();
         this.Type = new HashMap<>();
         this.All = new HashMap<>();

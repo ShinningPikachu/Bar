@@ -7,7 +7,7 @@ public class TableDictionary {
     HashMap<String, HashMap<Integer, Table>> allTables;
     ArrayList<String> locations;
     ArrayList<Integer> num;
-    TableDictionary(ArrayList<String> areas, ArrayList<Integer> number){
+    public TableDictionary(ArrayList<String> areas, ArrayList<Integer> number){
         this.locations = areas;
         this.num = number;
         Integer pos = 0;

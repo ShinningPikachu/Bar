@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class TicketDictionary {
     HashMap<Integer,Ticket> allTicket;
     Integer counter;
-    TicketDictionary(){
+    public TicketDictionary(){
         this.allTicket = new HashMap<>();
         this.counter = 0;
     }
