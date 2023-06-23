@@ -26,9 +26,10 @@ public class Plataform {
         num.add(2);
         num.add(2);
         num.add(2);
-        TaD = new TableDictionary(area, num);
+        TaD = new TableDictionary(area, num, PD);
 
-        TiD = new TicketDictionary();
+        TiD = new TicketDictionary(PD);
+
     }
 
 }

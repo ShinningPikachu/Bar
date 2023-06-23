@@ -15,6 +15,7 @@ public class ProductDictionary {
 
     HashMap<String, Product> actualResult;
 
+
     public ProductDictionary(ArrayList<String> type, ArrayList<String> ingred){
         this.Ingredient = new HashMap<>();
         this.Type = new HashMap<>();
@@ -28,7 +29,6 @@ public class ProductDictionary {
             this.Ingredient.put(i, new HashMap<>());
         }
     }
-
     ArrayList<String> FindWithIngredient(String name){
         this.actualResult = Intersection(this.actualResult, this.Ingredient.get(name)); //need to change
         return (ArrayList<String>) this.actualResult.keySet();
@@ -53,7 +53,6 @@ public class ProductDictionary {
             this.Ingredient.get(i).put(name, n);
         }
     }
-
     void DeleteProduct(String type, String name){
         Product p = Type.get(type).get(name);
         Type.get(type).remove(name);
@@ -62,15 +61,11 @@ public class ProductDictionary {
             Ingredient.get(i).remove(name);
         }
     }
-
     //Make intersection of teo hash map
     HashMap<String, Product> Intersection(HashMap<String, Product> a, HashMap<String, Product> b){
         HashMap<String, Product> test = new HashMap<>(a);
         test.keySet().retainAll(b.keySet());
         return test;
     }
-
-
-
 
 }
