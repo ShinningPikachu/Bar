@@ -3,6 +3,7 @@ package Domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Set;
 
 //This class maintain all products sets, and helps to find what is needed efficiently
 public class ProductDictionary {
@@ -12,8 +13,7 @@ public class ProductDictionary {
     static HashMap<String, Product> All;
     static ArrayList<String> ingred;
     static ArrayList<String> type;
-
-    HashMap<String, Product> actualResult;
+    static HashMap<String, Product> actualResult;
 
 
     public ProductDictionary(ArrayList<String> type, ArrayList<String> ingred){
@@ -22,6 +22,7 @@ public class ProductDictionary {
         this.All = new HashMap<>();
         this.ingred = new ArrayList<>(ingred);
         this.type = new ArrayList<>(type);
+        this.actualResult = new HashMap<>();
         for(String i : this.type){
             this.Type.put(i, new HashMap<>());
         }
@@ -29,17 +30,18 @@ public class ProductDictionary {
             this.Ingredient.put(i, new HashMap<>());
         }
     }
-    ArrayList<String> FindWithIngredient(String name){
+    public Set<String> FindWithIngredient(String name){
         this.actualResult = Intersection(this.actualResult, this.Ingredient.get(name)); //need to change
-        return (ArrayList<String>) this.actualResult.keySet();
+        return this.actualResult.keySet();
     }
-    ArrayList<String> FindWithCategory(String name){
+    public ArrayList<String> FindWithCategory(String name){
         this.actualResult = Intersection(this.actualResult, this.Type.get(name));
         return (ArrayList<String>) this.actualResult.keySet();
     }
-    void CleanSearch(){this.actualResult.clear();}
-    void AddProduct(String type, String name, ArrayList<String> ingre, Double price){
-        Product n = new Product(name, price, ingre);
+    public void CleanSearch(){this.actualResult = this.All;}
+    public void AddProduct(String type, String name, ArrayList<String> ingre, Double price){
+        Product n = new Product(name, price, ingre, type);
+        All.put(name, n);
         if(!Type.containsKey(type)){
             Type.put(type, new HashMap<>());
             this.type.add(type);
@@ -52,20 +54,97 @@ public class ProductDictionary {
             }
             this.Ingredient.get(i).put(name, n);
         }
+        actualResult = All;
     }
-    void DeleteProduct(String type, String name){
+
+    public void DeleteProduct(String type, String name){
         Product p = Type.get(type).get(name);
+        All.remove(name);
+        actualResult.remove(name);
         Type.get(type).remove(name);
         ArrayList<String> x = p.getIngredient();
         for(String i: x){
             Ingredient.get(i).remove(name);
         }
     }
+
     //Make intersection of teo hash map
-    HashMap<String, Product> Intersection(HashMap<String, Product> a, HashMap<String, Product> b){
+    public HashMap<String, Product> Intersection(HashMap<String, Product> a, HashMap<String, Product> b){
         HashMap<String, Product> test = new HashMap<>(a);
         test.keySet().retainAll(b.keySet());
         return test;
+    }
+
+    public void ChangePrice(String name, Double newPrice){
+        if(All.containsKey(name)){
+            this.All.get(name).modiPrice(newPrice);
+        }
+    }
+
+    public void ChangeName(String oldName, String newName){
+        if(All.containsKey(oldName) && !All.containsKey(newName)){
+            Product p =  All.get(oldName);
+            p.modName(newName);
+            All.remove(oldName);
+            All.put(newName, p);
+            Type.get(p.getType()).remove(oldName);
+            Type.get(p.getType()).put(newName, p);
+            for(String i : p.getIngredient()){
+                Ingredient.get(i).remove(oldName);
+                Ingredient.get(i).put(newName, p);
+            }
+        }
+    }
+
+    public void ModIngredientDelete(String name, String oldIngredient){
+        if(All.containsKey(name) && Ingredient.containsKey(oldIngredient) && Ingredient.get(oldIngredient).containsKey(name)){
+            All.get(name).DeleteIngredient(oldIngredient);
+            Ingredient.get(oldIngredient).remove(name);
+        }
+    }
+
+    public void ModIngredientAdd(String name, String newIngredient){
+        All.get(name).AddIngredient(newIngredient);
+        if(Ingredient.containsKey(newIngredient)){
+            Ingredient.get(newIngredient).put(name, All.get(name));
+        }else{
+            Ingredient.put(newIngredient, new HashMap<>());
+            Ingredient.get(newIngredient).put(name, All.get(name));
+        }
+    }
+
+    public void info(){
+        if(!ingred.isEmpty()){
+            System.out.println(ingred);
+        }else{
+            System.out.println("Ingredient is empty");
+        }
+        if(!type.isEmpty()){
+            System.out.println(type);
+        }else{
+            System.out.println("Type is empty");
+        }
+        if(!Ingredient.isEmpty()){
+            System.out.println(Ingredient);
+        }else{
+            System.out.println("Ingredient none");
+        }
+        if(!Type.isEmpty()){
+            System.out.println(Type);
+        }else{
+            System.out.println("Type none");
+        }
+        if(!All.isEmpty()){
+            System.out.println(All);
+        }else{
+            System.out.println("All empty");
+        }
+        if(!actualResult.isEmpty()){
+            System.out.println(actualResult);
+        }else{
+            System.out.println("actualResult empty");
+        }
+        System.out.println("-------------------------");
     }
 
 }
