@@ -13,11 +13,15 @@ public class Table {
         this.value = 0.0;
         this.ID = ID;
     }
-    void NewTicket(TicketDictionary x){
-        assign=x.NewTickets();
+    public void NewTicket(TicketDictionary x){
+        assign=x.NewTickets(this.location, this.ID);
     }
 
-    void AddProduct(){
-        //assign.AddProduct("", 0.0, new ArrayList<>(), xx);
+    public Ticket getTicket(){return this.assign;}
+
+    public void DeleteTicket(){
+        this.assign = null;
     }
+
+
 }

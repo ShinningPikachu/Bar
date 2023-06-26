@@ -1,7 +1,8 @@
 import Domain.*;
 
 import java.util.ArrayList;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
 public class Plataform {
     //do something
     static ProductDictionary PD;
@@ -25,44 +26,18 @@ public class Plataform {
 
         PD.info();
 
-        PD.ChangeName("brava", "bravaPatata");
-
-        PD.info();
-
-        PD.AddProduct("tapas", "brava", Patata, 6.5);
-
-        PD.info();
-
-        PD.ModIngredientAdd("brava", "sal");
-
-        PD.info();
-
-        PD.ModIngredientDelete("brava", "patata");
-
-        PD.info();
-
-        System.out.println(PD.FindWithIngredient("patata"));
-
-        System.out.println(PD.FindWithIngredient("sal"));
-
-        PD.CleanSearch();
-
-        System.out.println(PD.FindWithIngredient("sal"));
-
-
-
-        /*
         ArrayList<String> area = new ArrayList<>();
         area.add("top");
         area.add("down");
-        area.add("out");
         ArrayList<Integer> num = new ArrayList<>();
         num.add(2);
         num.add(2);
-        num.add(2);
         TaD = new TableDictionary(area, num, PD);
+        TaD.info();
 
-        TiD = new TicketDictionary(PD);*/
+        TiD = new TicketDictionary(PD);
+        Table x = TaD.getTable(1, "top");
+        x.NewTicket(TiD);
     }
 
     public static void main(String[] args){

@@ -13,6 +13,8 @@ public class ProductDictionary {
     static HashMap<String, Product> All;
     static ArrayList<String> ingred;
     static ArrayList<String> type;
+    static ArrayList<String> ingredSearch;
+    static ArrayList<String> typeSearch;
     static HashMap<String, Product> actualResult;
 
 
@@ -23,6 +25,8 @@ public class ProductDictionary {
         this.ingred = new ArrayList<>(ingred);
         this.type = new ArrayList<>(type);
         this.actualResult = new HashMap<>();
+        this.ingredSearch = new ArrayList<>();
+        this.typeSearch = new ArrayList<>();
         for(String i : this.type){
             this.Type.put(i, new HashMap<>());
         }
@@ -31,14 +35,16 @@ public class ProductDictionary {
         }
     }
     public Set<String> FindWithIngredient(String name){
-        this.actualResult = Intersection(this.actualResult, this.Ingredient.get(name)); //need to change
+        this.ingredSearch.add(name);
+        this.actualResult = Intersection(); //need to change
         return this.actualResult.keySet();
     }
-    public ArrayList<String> FindWithCategory(String name){
-        this.actualResult = Intersection(this.actualResult, this.Type.get(name));
-        return (ArrayList<String>) this.actualResult.keySet();
+    public Set<String> FindWithCategory(String name){
+        this.typeSearch.add(name);
+        this.actualResult = Intersection();
+        return this.actualResult.keySet();
     }
-    public void CleanSearch(){this.actualResult = this.All;}
+    public void CleanSearch(){ingredSearch.clear(); typeSearch.clear();}
     public void AddProduct(String type, String name, ArrayList<String> ingre, Double price){
         Product n = new Product(name, price, ingre, type);
         All.put(name, n);
@@ -69,10 +75,22 @@ public class ProductDictionary {
     }
 
     //Make intersection of teo hash map
-    public HashMap<String, Product> Intersection(HashMap<String, Product> a, HashMap<String, Product> b){
-        HashMap<String, Product> test = new HashMap<>(a);
-        test.keySet().retainAll(b.keySet());
+    public HashMap<String, Product> Intersection(){
+        HashMap<String, Product> test = new HashMap<>(this.All);
+        for(String i : ingredSearch){
+            if(Type.containsKey(i)){
+                test.keySet().retainAll(Ingredient.get(i).keySet());
+            }
+        }
+        for(String i : typeSearch){
+            if(Ingredient.containsKey(i)){
+                test.keySet().retainAll(Type.get(i).keySet());
+            }
+        }
         return test;
+    }
+    public Product getProduct(String name){
+        return All.get(name);
     }
 
     public void ChangePrice(String name, Double newPrice){
@@ -89,6 +107,8 @@ public class ProductDictionary {
             All.put(newName, p);
             Type.get(p.getType()).remove(oldName);
             Type.get(p.getType()).put(newName, p);
+            actualResult.remove(oldName);
+            actualResult.put(newName, p);
             for(String i : p.getIngredient()){
                 Ingredient.get(i).remove(oldName);
                 Ingredient.get(i).put(newName, p);
