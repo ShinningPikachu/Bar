@@ -3,6 +3,8 @@ import Domain.*;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Set;
+
 public class Plataform {
     //do something
     static ProductDictionary PD;
@@ -23,6 +25,10 @@ public class Plataform {
         Patata.add("patata");
 
         PD.AddProduct("tapas", "brava", Patata, 5.5);
+        PD.AddProduct("tapas", "chips", Patata, 5.0);
+        PD.AddProduct("tapas", "arroz", Patata, 5.0);
+        PD.AddProduct("tapas", "toufu", Patata, 5.0);
+        PD.AddProduct("tapas", "huevo", Patata, 5.0);
 
         PD.info();
 
@@ -38,6 +44,9 @@ public class Plataform {
         TiD = new TicketDictionary(PD);
         Table x = TaD.getTable(1, "top");
         x.NewTicket(TiD);
+    }
+    Set<String> GetListProduct(){
+        return PD.GetProductList();
     }
 
     public static void main(String[] args){

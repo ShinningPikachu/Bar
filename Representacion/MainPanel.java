@@ -1,29 +1,30 @@
 package Representacion;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Set;
+
 public class MainPanel {
-    public static void main(String[] args) {
+
+    public MainPanel(Set<String> allProduct){
         // Create a JFrame to hold the interface components
-        JFrame frame = new JFrame("Button Interface");
+        JFrame frame = new JFrame("Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         // Create a JPanel to hold the buttons
         JPanel panel = new JPanel();
 
-        // Create multiple JButton instances and add them to the panel
-        JButton button1 = new JButton("Button 1");
-        panel.add(button1);
+        for (String element : allProduct) {
+            JButton button = new JButton(element);
+            panel.add(button);
+        }
 
-        JButton button2 = new JButton("Button 2");
-        panel.add(button2);
+        JScrollPane scrollPane = new JScrollPane(panel);
 
-        JButton button3 = new JButton("Button 3");
-        panel.add(button3);
+        scrollPane.setPreferredSize(new Dimension(screenSize.width, screenSize.height));
 
+        frame.getContentPane().add(scrollPane);
         // Add the panel to the frame
         frame.getContentPane().add(panel);
 

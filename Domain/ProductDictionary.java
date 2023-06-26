@@ -93,6 +93,10 @@ public class ProductDictionary {
         return All.get(name);
     }
 
+    public Set<String> GetProductList(){
+        return All.keySet();
+    }
+
     public void ChangePrice(String name, Double newPrice){
         if(All.containsKey(name)){
             this.All.get(name).modiPrice(newPrice);
