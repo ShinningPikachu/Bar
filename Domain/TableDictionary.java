@@ -62,7 +62,9 @@ public class TableDictionary {
     public Table getTable(Integer ID, String area){
         return this.allTables.get(area).get(ID);
     }
-
+    public HashMap<String, HashMap<Integer, Table>> GetTables() {
+        return allTables;
+    }
     public void info(){
         if(!allTables.isEmpty()){
             System.out.println(allTables);

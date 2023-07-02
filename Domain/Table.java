@@ -19,6 +19,8 @@ public class Table {
 
     public Ticket getTicket(){return this.assign;}
 
+    public Double getValue(){return 0.0;}
+
     public void DeleteTicket(){
         this.assign = null;
     }

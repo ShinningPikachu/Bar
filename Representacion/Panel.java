@@ -1,11 +1,12 @@
 package Representacion;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import Domain.*;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 public class Panel {
@@ -26,12 +27,12 @@ public class Panel {
     JPanel ticketpanel1;
     JPanel ticketpanel2;
     Dimension screenSize;
-    public Panel(Set<String> productlist, ArrayList<String> typelist, ArrayList<String> ingrelist){
+    public Panel(Set<String> productlist, ArrayList<String> typelist, ArrayList<String> ingrelist, HashMap<String, HashMap<Integer, Table>> tables){
         IniFrame();
         mainPanel = new JPanel();
         mainPanel.setBackground(Color.GRAY);
 
-        SetTablePanel();
+        SetTablePanel(tables);
         mainPanel.add(tablePanel);
 
         SetProductPanel(productlist, typelist, ingrelist);
@@ -56,7 +57,7 @@ public class Panel {
         screenSize = new Dimension(displayMode.getWidth()-100, displayMode.getHeight()-100);
         frame.setPreferredSize(screenSize);
     }
-    private void SetTablePanel(){
+    private void SetTablePanel(HashMap<String, HashMap<Integer, Table>> tables){
         tablePanel = new JPanel();
         tablePanel.setBackground(Color.MAGENTA);
         tablePanel.setPreferredSize(new Dimension(screenSize.width/3, screenSize.height));
@@ -64,16 +65,43 @@ public class Panel {
         tablepanel1 = new JPanel();
         tablepanel1.setBackground(java.awt.Color.RED);
         tablepanel1.setPreferredSize(new Dimension(tablePanel.getPreferredSize().width, tablePanel.getPreferredSize().height/3));
+        Border border1= BorderFactory.createTitledBorder("Terraza");
+        tablepanel1.setBorder(border1);
+        //tablepanel1.setLayout(new BorderLayout());
+        tablepanel1.setLayout(new GridLayout(3, 3 ,3, 3));
+        for(Integer i : tables.get("terraza").keySet()){
+            JButton but = new JButton("<html>" + i.toString() + "<br>"+ tables.get("terraza").get(i).getValue() + "<html>");
+            //but.setAlignmentX(Component.CENTER_ALIGNMENT);
+            tablepanel1.add(but);
+        }
+        JButton addTableTerraza = new JButton("+");
+        tablepanel1.add(addTableTerraza);
         tablePanel.add(tablepanel1);
 
         tablepanel2 = new JPanel();
         tablepanel2.setBackground(java.awt.Color.BLUE);
         tablepanel2.setPreferredSize(new Dimension(tablePanel.getPreferredSize().width, tablePanel.getPreferredSize().height/3));
+        Border border2= BorderFactory.createTitledBorder("Arriba");
+        tablepanel2.setBorder(border2);
+        for(Integer i : tables.get("top").keySet()){
+            JButton but = new JButton("<html>" + i.toString() + "<br>"+ tables.get("top").get(i).getValue() + "<html>");
+            tablepanel2.add(but);
+        }
+        JButton addTableTop = new JButton("+");
+        tablepanel2.add(addTableTop);
         tablePanel.add(tablepanel2);
 
         tablepanel3 = new JPanel();
         tablepanel3.setBackground(java.awt.Color.GREEN);
         tablepanel3.setPreferredSize(new Dimension(tablePanel.getPreferredSize().width, tablePanel.getPreferredSize().height/3));
+        Border border3= BorderFactory.createTitledBorder("Abajo");
+        tablepanel3.setBorder(border3);
+        for(Integer i : tables.get("down").keySet()){
+            JButton but = new JButton("<html>" + i.toString() + "<br>"+ tables.get("down").get(i).getValue() + "<html>" );
+            tablepanel3.add(but);
+        }
+        JButton addTableDown = new JButton("+");
+        tablepanel3.add(addTableDown);
         tablePanel.add(tablepanel3);
     }
 
@@ -129,6 +157,11 @@ public class Panel {
         ticketpanel2 = new JPanel();
         ticketpanel2.setBackground(java.awt.Color.GREEN);
         ticketpanel2.setPreferredSize(new Dimension(ticketPanel.getPreferredSize().width, ticketPanel.getPreferredSize().height/2-200));
+        JButton print = new JButton("打印");
+        JButton recieve = new JButton("买单");
+        // ....
+        ticketpanel2.add(print);
+        ticketpanel2.add(recieve);
         ticketPanel.add(ticketpanel2);
     }
     public static void main(String[] arg){
