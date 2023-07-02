@@ -2,9 +2,9 @@ import Representacion.*;
 
 public class Represent {
     static Plataform PT;
-    static MainPanel MP;
+    static Panel MP;
     static public void main(String[] arg){
         PT = new Plataform();
-        //MP = new MainPanel(PT.GetListProduct());
+        MP = new Panel(PT.GetListProduct(), PT.GetListType(), PT.GetListIngre());
     }
 }

@@ -94,7 +94,13 @@ public class ProductDictionary {
     }
 
     public Set<String> GetProductList(){
-        return All.keySet();
+        return actualResult.keySet();
+    }
+    public ArrayList<String> GetTypeList(){
+        return this.type;
+    }
+    public ArrayList<String> GetIngreList(){
+        return this.ingred;
     }
 
     public void ChangePrice(String name, Double newPrice){

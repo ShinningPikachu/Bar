@@ -45,8 +45,13 @@ public class Plataform {
         Table x = TaD.getTable(1, "top");
         x.NewTicket(TiD);
     }
-    Set<String> GetListProduct(){
+    public Set<String> GetListProduct(){
         return PD.GetProductList();
+    }
+    public ArrayList<String> GetListType(){return PD.GetTypeList();}
+
+    public ArrayList<String> GetListIngre(){
+        return PD.GetIngreList();
     }
 
     public static void main(String[] args){
